@@ -457,7 +457,6 @@
         },
         show: function(css) {
           // get the bound element's background color and set selector to it
-          console.log(css);
           if (css) {
             try {
               var rgb = getRGBFromCSS($(c.currentEle).css(css));
