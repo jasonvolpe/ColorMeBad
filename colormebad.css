@@ -1,0 +1,161 @@
+#ColorSelector {
+    display: none;
+    position: fixed;
+    top: 300px;
+    left: 300px;
+    height: 240px;
+    width: 385px;
+    border: 1px gray solid;
+    background-color: black;
+    
+    -moz-box-shadow: 3px 3px 5px #ccc;
+    -webkit-box-shadow: 3px 3px 5px #ccc;
+    box-shadow: 3px 3px 5px #ccc;
+}
+
+#debug {
+    display: none;
+}
+
+#ColorSelector-SatVal {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    border: 1px solid gray;
+    width: 200px;
+    height: 200px;
+    
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%),
+                -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))),
+                -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)));/* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%),
+                -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);/* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%),
+                -o-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);/* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%),
+                -ms-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ),
+            progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+    background: linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%),
+                linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
+
+}
+
+#ColorSelector-SatVal-Marker {
+    position: absolute;
+    border: 2px solid white;
+    width: 4px;
+    height: 4px;
+    background: transparent;
+    
+    border-radius: 100%;
+    -moz-border-radius: 100%;
+}
+
+#ColorSelector-Hue {
+    position: absolute;
+    top: 20px;
+    left: 240px;
+    border: 1px solid gray;
+    width: 20px;
+    height: 200px;
+    
+    background-image: linear-gradient(
+        center bottom,
+        rgb(255,0,0) 0%,
+        rgb(255,255,0) 17%,
+        rgb(0,255,0) 34%,
+        rgb(0,255,255) 51%,
+        rgb(0,0,255) 68%,
+        rgb(255,0,255) 84%,
+        rgb(255,0,0) 100%
+    );
+    
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(255,0,0) 0%,
+        rgb(255,255,0) 17%,
+        rgb(0,255,0) 34%,
+        rgb(0,255,255) 51%,
+        rgb(0,0,255) 68%,
+        rgb(255,0,255) 84%,
+        rgb(255,0,0) 100%
+    );
+    
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(255,0,0)),
+        color-stop(0.17, rgb(255,255,0)),
+        color-stop(0.34, rgb(0,255,0)),
+        color-stop(0.51, rgb(0,255,255)),
+        color-stop(0.68, rgb(0,0,255)),
+        color-stop(0.84, rgb(255,0,255)),
+        color-stop(1, rgb(255,0,0))
+    );
+}
+
+#ColorSelector-Hue-Marker {
+    position: absolute;
+    top: 20px;
+    left: -3px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    width: 21px;
+    height: 2px;
+    background: transparent;
+}
+
+#ColorSelector-Color-New {
+    position: absolute;
+    left: 280px;
+    top: 20px;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-bottom: none;
+    border-right: 1px solid gray;
+    width: 84px;
+    height: 67px;
+    background: gray;
+}
+
+#ColorSelector-Color-Old {
+    position: absolute;
+    left: 280px;
+    top: 88px;
+    border-top: none;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    width: 84px;
+    height: 67px;
+    background: gray;
+}
+
+#ColorSelector-Color-Old:hover {
+    cursor: pointer;
+}
+
+#ColorSelector-Select {
+    position: absolute;
+    left: 280px;
+    top: 174px;
+    width: 84px;
+    height: 46px;
+    line-height: 47px;
+    margin: 0px auto;
+    text-align: center;
+    border: 1px solid gray;
+    color: white;
+    background: black;
+}
+
+#ColorSelector-Select:hover {
+    cursor: pointer;
+    background: gray;
+    line-height: 48px;
+}
