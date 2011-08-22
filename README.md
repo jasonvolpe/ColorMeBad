@@ -35,4 +35,5 @@ To attach the color selector to an element, call the `colormebad` function on th
         close: function() {
             // do this on selector close
         }
+    });
 
