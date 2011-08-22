@@ -16,8 +16,23 @@ ColorMeBad requires jQuery.
 
 ### Usage
 
-To attach the color selector to an element, call the `colormebad` function on the element's selector and pass the CSS color property to change. For example, the following call would open the color selector tool to modify the background color property of an element with ID `all4love`:
+To attach the color selector to an element, call the `colormebad` function on the element's selector while passing some handlers for event callbacks. The following example binds a ColorMeBad color selector to an #all4love element:
 
-    $('#all4love').colormebad({css:'background-color'});
+    $('#all4love').colormebad({
+        show: function() {
+            // do this when selector opens
+            
+            // sets initial selector color to background color of #all4love element
+            $(this).colormebad('setColor', $(this).css('background-color'));
+        },
+        change: function() {
+            // do this when color selector cursor is moved (this is called a lot)
+            
+            // changes the background-color of the #all4love element as the
+            // color seletor cursor is moved
+            $(this).css('background-color', $(this).colormebad('getColor'));
+        },
+        close: function() {
+            // do this on selector close
+        }
 
-A CSS property must be passed to the function.

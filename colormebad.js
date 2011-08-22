@@ -4,7 +4,7 @@
   A color selection tool with no images. Now as a jQuery plugin.
   
   Author:   jason.volpe@gmail.com
-  Updated:  7/31/2011
+  Updated:  8/15/2011
 */
 
 
@@ -18,6 +18,7 @@
         sat: 1,
         val: 1
       },
+      rgbText: 'rgb(0,0,0)',
       sv: { box: '#ColorSelector-SatVal',
             marker: '#ColorSelector-SatVal-Marker'
       },
@@ -31,7 +32,7 @@
                 hover: '.ColorSelector-Select-Hover'
       },
       html: '<div id="ColorSelector"><div id="ColorSelector-SatVal"><div id="ColorSelector-SatVal-Marker"></div></div><div id="ColorSelector-Hue"><div id="ColorSelector-Hue-Marker"></div></div><div id="ColorSelector-Color-New"></div><div id="ColorSelector-Color-Old"></div><div id="ColorSelector-Select">Select</div></div></div>',
-      cssFile: 'js/colormebad/colormebad.css',
+      cssFile: 'colormebad.css',
       cssGood: false
     };
     
@@ -217,7 +218,7 @@
         $(c.sv.box).css('background-color', rgbHueText);
         
         // update bound object's background color
-        methods.update(c.css, rgbText);
+        methods.update(rgbText);
 
         return true;
     }
@@ -369,14 +370,8 @@
     }
         
     var methods = {
-        init: function( options ) {
-          // css element to update
-          if (options.css) {
-            c.css = options.css;
-          } else {
-            $.error( 'No CSS property passed in initialization.' );
-          }
-          
+        init: function( args ) {
+
           // load CSS
           $('head').append('<link>');
           css = $('head').children(':last');
@@ -389,6 +384,19 @@
           // load html
           $('body').append(c.html);
           $(c.name).hide();
+          
+          // process args
+          if (args.show && typeof args.show == 'function') {
+            methods.onShow = args.show;
+          }
+          
+          if(args.change && typeof args.change == 'function') {
+            methods.onColorChange = args.change;
+          }
+          
+          if(args.close && typeof args.close == 'function') {
+            methods.onClose = args.close;
+          }
           
           // bind events
           // saturation/value and hue box events
@@ -447,7 +455,7 @@
                 if (!$(c.name).hasClass('open')) {
                   c.currentEle = this;
                   e.stopPropagation();
-                  methods.show(c.css);
+                  methods.show();
                 } else {
                   methods.hide();
                 }
@@ -455,24 +463,19 @@
             });
           });
         },
-        show: function(css) {
-          // get the bound element's background color and set selector to it
-          if (css) {
-            try {
-              var rgb = getRGBFromCSS($(c.currentEle).css(css));
-              setSelectorColor(rgb[0], rgb[1], rgb[2]);
-              
-              // set previous color box
-              c.origColor = $(c.currentEle).css(css);
-              $(c.color.old).css('background-color', c.origColor);
-            } catch(e) {
-              $.error( 'CSS property ' + c.css + ' does not have a color attribute.' );
-            }
-          } else {
-            // set random color if unable to get bound element's color
-            var randRGB = randomRGB();
-            setSelectorColor(randRGB.r, randRGB.b, randRGB.g);
-          }
+        
+        getColor: function() {
+          return c.rgbText;
+        },
+        
+        setColor: function(cssColor) {
+          var rgb = getRGBFromCSS(cssColor);
+          setSelectorColor(rgb[0], rgb[1], rgb[2]);
+          $(c.color.old).css('background-color', cssColor);
+        },
+        
+        show: function() {
+          methods.onShow.call(c.currentEle);
           
           // position center and fade in
           $(c.name).css('left', $(window).width() / 2 - $(c.name).width() / 2 + 'px');
@@ -480,35 +483,43 @@
           $(c.name).fadeIn('fast');
           $(c.name).addClass('open');
         },
+        
         hide: function() {
           $(c.name).fadeOut('fast');
           $(c.name).removeClass('open');
+          methods.onClose.call(c.currentEle);
         },
-        update: function( css, value ) {
-          if (css) {
-            try {
-              $(c.currentEle).css(css, value);
-            } catch(e) {
-              $.error( 'CSS property ' + c.css + ' does not have a color attribute.' );
-            }
-          }
+        
+        update: function(rgbText) {
+          c.rgbText = rgbText;
+          methods.onColorChange.call(c.currentEle);
         },
+        
         destroy: function() {
             return this.each(function(){
                 $(window).unbind('.colormebad');
             })
+        },
+        
+        onShow: function(args) {
+        },
+        
+        onColorChange: function(args) {
+        },
+        
+        onClose: function(args) {
         }
     };
     
     $.fn.colormebad = function( method ) {
-        if ( methods[ method ] ) {
-          return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-        } else if ( typeof method === 'object' || ! method ) {
-          return methods.init.apply( this, arguments );
-        } else {
-          $.error( 'Method ' + method + ' does not exists on Jquery.colormebad' );
-        };
-        
-        return true;
+      if ( methods[ method ] ) {
+        return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      } else if ( typeof method === 'object' || ! method ) {
+        return methods.init.apply( this, arguments );
+      } else {
+        $.error( 'Method ' + method + ' does not exists on Jquery.colormebad' );
+      };
+      
+      return true;
     };
 })( jQuery );

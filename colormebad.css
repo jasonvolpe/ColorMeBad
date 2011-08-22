@@ -1,5 +1,5 @@
 #ColorSelector {
-    display: none;
+    //display: none;
     position: fixed;
     top: 300px;
     left: 300px;
@@ -14,7 +14,7 @@
 }
 
 #debug {
-    display: none;
+    //display: none;
 }
 
 #ColorSelector-SatVal {
